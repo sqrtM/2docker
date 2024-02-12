@@ -1,34 +1,46 @@
 services:
-  reverse-proxy:
-    image: "traefik:v2.3"
-    container_name: "traefik"
+  identidock:
+    build: .
+    ports:
+      - "5000:5000"
+    networks:
+      - identinet
+    volumes:
+      - "./app:/app"
+    environment:
+      - FLASK_APP=/app/identidock.py
+      - FLASK_ENV=development
+    command: flask run -h 0.0.0.0
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.identidock.rule=Host(`monster.localhost`)"
+      - "traefik.http.services.identidock.loadbalancer.server.port=5000" 
+  
+  dnmonster:
+    image: amouat/dnmonster:1.0
+    ports:
+      - "8080:8080"
+    networks:
+      - identinet
+
+  redis:
+    image: redis
+    networks:
+      - identinet
+
+  traefik:
+    image: traefik:v2.3
     command:
       - "--api.insecure=true"
       - "--providers.docker=true"
-      - "--providers.docker.swarmMode=true"
-      - "--entrypoints.web.address=:80"
+      - "--providers.docker.exposedbydefault=true"
+      - "--providers.docker.defaultRule=Host(`{{ trimPrefix `/` .Name }}.docker.localhost`)"
+      - "--entrypoints.web.address=:81"
     ports:
-      - target: 80
-        published: 80
-        mode: host
-      - target: 8080
-        published: 8080
-        mode: host
-
-    deploy:
-      mode: global
-      placement:
-        constraints:
-          - node.role == manager
-      restart_policy:
-        condition: on-failure
-
+      - "81:80"
+      - "8081:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-  whoami:
-    image: "traefik/whoami"
-    deploy:
-      replicas: 5
-      labels:
-        - traefik.http.routers.whoami-service.rule=Host(`example.com`)
-        - traefik.http.services.whoami-service.loadbalancer.server.port=80
+
+networks:
+  identinet:
