@@ -1,0 +1,31 @@
+{% extends "../base.html" %}
+{% call super() %}
+{% block content %}
+    <body>
+    <h1 class="board-title">Boards</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Board Name</th>
+            <th>Description</th>
+            <th>Total Threads</th>
+            <th>Most Recent Post</th>
+            <th>Post Time</th>
+            <th>Auth Only?</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for board in boards %}
+            <tr class="row">
+                <td><a href="/forum/{{ board.id }}" class="board-link">{{ board.name }}</a></td>
+                <td>{{ board.description }}</td>
+                <td>{{ board.total_threads }}</td>
+                <td>{{ board.most_recent_post_title }}</td>
+                <td>{{ board.most_recent_post_time|format_utc_datetime }}</td>
+                <td>{{ board.authorized_only }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </body>
+{% endblock %}
