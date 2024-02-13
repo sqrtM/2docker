@@ -1,0 +1,17 @@
+GET /kibana_sample_data_flights/_search
+{
+  "query" : {
+    "term": {
+      "Carrier": "ES-Air"
+    }
+  }
+}
+
+GET /kibana_sample_data_flights/_search
+{
+  "query" : {
+    "match": {
+      "Dest": "New"
+    }
+  }
+}

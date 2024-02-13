@@ -1,0 +1,19 @@
+PUT /test/_mapping
+{
+  "properties": {
+    "ISBN2": {
+      "type": "long"
+    }
+  }
+}
+
+POST /test/_doc/1
+{
+    "title": "Le séminaire. Vol. 15. L'acte psychanalytique",
+    "author": "Jacques Lacan",
+    "description": "\"Au coeur du lacanisme, ce séminaire questionne l'acte psychanalytique et l'analyste lui-même. La conclusion aborde les événements de mai 1968.\"",
+    "price": 26.00,
+    "ISBN2": 12356789123456789
+}
+
+GET /test/_doc/1
