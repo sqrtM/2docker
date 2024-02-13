@@ -1,0 +1,33 @@
+POST /library/_doc/1
+{
+    "title": "Le séminaire. Vol. 15. L'acte psychanalytique",
+    "author": "Jacques Lacan",
+    "description": "\"Au coeur du lacanisme, ce séminaire questionne l'acte psychanalytique et l'analyste lui-même. La conclusion aborde les événements de mai 1968.\"",
+    "price": 26.00
+}
+
+POST /library/_doc/2
+{
+    "title": "Le séminaire. Vol. 16",
+    "author": "Jacques Lacan",
+    "description": "\"Something else\"",
+    "price": 29.00
+}
+
+POST /library/_doc/3
+{
+    "title": "Le séminaire. Vol. 17",
+    "author": "Jacques Lacan",
+    "description": "\"Another\"",
+    "price": 29.00
+}
+
+PUT /library/_doc/1
+{
+  "price": 10.00
+}
+
+GET /library/_doc/1
+GET /library/_doc/2
+GET /library/_search
+DELETE /library/_doc/WPDEoo0BRVgkfmaP7vyL
