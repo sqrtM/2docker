@@ -4,10 +4,26 @@ filebeat.config:
     reload.enabled: false
 
 filebeat.autodiscover:
-  providers:
-    - type: docker
-      hints.enabled: true
+ providers:
+   - type: docker
+     templates:
+       - condition:
+         contains:
+           docker.container.image: nginx
+         config:
+           - module: nginx
+             access:
+               input:
+                 type: docker
+                 containers.ids:
+                   - "${data.docker.container.id}"
+             error:
+               input:
+                 type: docker
+                 containers.ids:
+                   - "${data.docker.container.id}"
 
+                     
 processors:
 - add_cloud_metadata: ~
 
@@ -15,3 +31,6 @@ output.elasticsearch:
   hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'
   username: '${ELASTICSEARCH_USERNAME:}'
   password: '${ELASTICSEARCH_PASSWORD:}'
+
+setup.kibana:
+  host: http://kibana:5601  

@@ -21,8 +21,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - logging-network
-    environment:
-      - -strict.perms=false
+    command: sh -c './filebeat modules enable nginx && exec filebeat -strict.perms=false'
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.13.0
@@ -30,6 +29,13 @@ services:
       - elasticsearch
     ports:
       - 5601:5601
+    networks:
+      - logging-network
+    
+  nginx:
+    image: nginx:alpine
+    ports:
+      - 8000:80
     networks:
       - logging-network
 

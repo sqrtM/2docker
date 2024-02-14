@@ -49,12 +49,11 @@ Ou vous pouvez chercher "erreur" dans les journaux (en fonction de ce que vous c
 
 - plusieurs solutions sont possibles ici. Si nous voulons connaître le nombre de fois qu'un utilisateur se connecte au site web, nous pourrions suivre le nombre d'adresses IP qui se connectent, classées par heure. Quelque chose comme ça ;
 
-[ip vis](ip-vis.jpg)
+![ip vis](ip-vis.jpg)
 
 
 
 ### trouver les correspondances possibles pour aller d’une ville A à une ville B entre telle et telle heure ?
-- DSL query
 
 ```json
 {
